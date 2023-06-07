@@ -38,28 +38,28 @@ class Game:
         win.title('Rock - paper - scissors')
         win.iconbitmap('./i/icon.ico')
         win.resizable(width=False, height=False)
-
-        # score
-
-        score_text = Label(win, text='Score:', font=('Arial', 15))
-        score_text.place(x=0, y=5)
+        win.configure(bg='#fcf2f0')
 
         # score of user
-        y_score = Label(win, text=f"{self.y_wins}", font=('Arial', 15), justify='left')
-        y_score.place(x=50, y=35)
+        y_score = Label(win, text='0', font=('Arial', 15), justify='left')
+        y_score.place(x=120, y=35)
 
         # score of computer
         c_score = Label(win, text='0', font=('Arial', 15), justify='right')
-        c_score.place(x=500, y=35)
+        c_score.place(x=440, y=35)
 
         # creating buttons
-        btn_rock = Button(win, text='Rock', font=('Arial', 15), command=lambda x=0: self.play(x))
-        btn_paper = Button(win, text = 'Paper', font=('Arial', 15), command=lambda x=1: self.play(x))
-        btn_scissors = Button(win, text='Scissors', font=('Arial', 15), command=lambda x=1: self.play(x))
+        b_i_r = PhotoImage(file='./i/btn/0.png')
+        b_i_r_btn = Button(win, image=b_i_r, command=lambda: self.play(0), bd=0)
+        b_i_r_btn.place(x=120, y=330)
 
-        btn_rock.place(x=10, y=100, width=80, height=30)
-        btn_paper.place(x=200, y=100, width=80, height=30)
-        btn_scissors.place(x=400, y=100, width=80, height=30)
+        b_i_p = PhotoImage(file='./i/btn/1.png')
+        b_i_p_btn = Button(win, image=b_i_p, command=lambda: self.play(1), bd=0)
+        b_i_p_btn.place(x=280, y=330)
+
+        b_i_s = PhotoImage(file='./i/btn/2.png')
+        b_i_s_btn = Button(win, image=b_i_s, command=lambda: self.play(2), bd=0)
+        b_i_s_btn.place(x=440, y=330)
 
         win.mainloop()
 
