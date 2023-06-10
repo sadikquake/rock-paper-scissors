@@ -65,10 +65,11 @@ class Game:
 
         self.win.protocol('WM_DELETE_WINDOWS', self.exit)
 
+        # array for all frames
+        self.gif_frames = []
+
     # play game
     def play(self, player_choise):
-        self.get_image('00')
-
         c_choice = random.choice(self.variants)
         y_choice = player_choise
 
@@ -76,6 +77,7 @@ class Game:
         try:
             if isinstance(y_choice, int) and y_choice in self.variants:
                 self.get_image('0')
+                time.sleep(0.3)
                 self.get_image(str(y_choice) + str(c_choice))
                 if c_choice == y_choice:
                     messagebox.showinfo('showinfo', 'Drown')
@@ -105,9 +107,20 @@ class Game:
         try:
             with Image.open(self.images['ga_' + file_key]) as i:
                 if getattr(i, 'is_animated', False):
+                    # clearing the array of frames
+                    self.gif_frames.clear()
                     for frame in ImageSequence.Iterator(i):
-                        self.ga = ImageTk.PhotoImage(frame)
-                        self.ga_lab.config(image=self.ga)
+                        self.gif_frames.append(ImageTk.PhotoImage(frame))
+
+                    count_frames = len(self.gif_frames)
+                    counter = 0
+                    while counter < count_frames:
+                        self.ga_lab.config(image=self.gif_frames[counter])
+                        self.win.update()
+                        time.sleep(0.08)
+                        counter += 1
+
+                    self.ga_lab.config(image=self.ga)
                 else:
                     self.ga = PhotoImage(file=self.images['ga_' + file_key])
                     self.ga_lab.config(image=self.ga)
