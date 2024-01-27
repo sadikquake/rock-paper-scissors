@@ -63,13 +63,21 @@ class Game:
         self.ga_lab = Label(self.win, image=self.ga)
         self.ga_lab.place(x=40, y=40)
 
-        self.win.protocol('WM_DELETE_WINDOWS', self.exit)
+        self.win.protocol('WM_DELETE_WINDOW', self.exit)
 
         # array for all frames
         self.gif_frames = []
 
+        # animation end flag
+        self.an_in_prog = False
+
     # play game
     def play(self, player_choise):
+        if self.an_in_prog:
+            return
+
+        self.an_in_prog = True
+
         c_choice = random.choice(self.variants)
         y_choice = player_choise
 
@@ -89,6 +97,8 @@ class Game:
                     self.c_wins += 1
                     self.c_score.config(text=self.c_wins)
                     messagebox.showinfo('showinfo', 'You have lost!')
+
+                self.an_in_prog = False
             else:
                 print('You have chosen a non-existent option')
         except:
